@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payroll Guard | Automated Payroll Verification &amp; Employee Access Control</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7d774"/><stop offset=".5" stop-color="#d9a21f"/><stop offset="1" stop-color="#a8730e"/></linearGradient></defs>
+  <symbol id="shield" viewBox="0 0 48 56"><path d="M24 2 44 9v16c0 13-8.6 23.3-20 29C12.6 48.3 4 38 4 25V9L24 2Z" fill="url(#gold)" stroke="#8a5d0b" stroke-width="1.5"/><path d="m15 27 6 6 12-14" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="topbar">
+  <a href="#top" class="brand"><svg class="shield-mark"><use href="#shield"/></svg><span>PAYROLL GUARD</span></a>
+  <nav class="nav" id="nav">
+    <button data-go="top">Dashboard</button>
+    <button data-panel="Employees">Employees</button>
+    <button data-panel="Reports">Reports</button>
+    <button data-panel="Access Control">Access Control</button>
+    <button data-panel="Missing Employee Cases">Cases</button>
+    <button class="gold-btn sm" id="open-login">Log In</button>
+  </nav>
+  <button class="menu-btn" id="menu-btn" aria-label="Toggle navigation"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+</header>
+
+<main id="top" class="hero">
+  <section class="hero-art" id="hero-art" aria-label="Cyber safe illustration of a glowing glass magnifying glass">
+    <svg class="circuits" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#3cc8f0" stroke-width=".6" opacity=".35">
+        <path d="M0 40h60l15 15h80M0 90h40l20 20h50M0 200h70l20-20h60M400 60h-70l-15 15h-60M400 140h-50l-20 20h-70M400 240h-80l-15-15h-50M120 0v50l20 20M280 0v40l-15 15M120 300v-60l20-20M290 300v-50l-20-20"/>
+      </g>
+      <g fill="#7eeeff" opacity=".7"><circle cx="155" cy="55" r="2"/><circle cx="110" cy="110" r="2"/><circle cx="150" cy="180" r="2"/><circle cx="255" cy="75" r="2"/><circle cx="270" cy="160" r="2"/><circle cx="215" cy="225" r="2"/></g>
+    </svg>
+    <div class="code-field" id="code-field"></div>
+    <div class="particles" id="particles"></div>
+    <div class="lens"><div class="lens-glow"></div><div class="lens-handle"></div></div>
+    <div class="cyber-safe">CYBER SAFE</div>
+  </section>
+
+  <section class="hero-copy">
+    <span class="tag"><i class="dot"></i> Real-time payroll integrity</span>
+    <h1>Automated Payroll Verification &amp; Employee Access Control</h1>
+    <p class="sub">Real-time verification to detect ghost accounts, validate payroll data, and manage secure employee access with end-to-end cyber safety and compliance.</p>
+    <div class="actions">
+      <button class="gold-btn" data-panel="Upload Employee Details">Upload Employee Details</button>
+      <button class="gold-btn" data-panel="Previous Month List">Previous Month List</button>
+      <button class="gold-btn" data-panel="Current Salary List">Current Salary List</button>
+    </div>
+    <div class="cards">
+      <button class="card warn" data-panel="Reports"><span class="label">Flagged Ghost Accounts</span><strong id="stat-flagged">12</strong><span class="note">Requires review</span><span class="bars"><i></i><i></i><i></i><i></i><i></i></span></button>
+      <button class="card ok" data-panel="Employees"><span class="label">Verified Employees</span><strong id="stat-verified">1,248</strong><span class="note" id="stat-note">98.4% coverage</span><span class="ring">98%</span></button>
+    </div>
+  </section>
+</main>
+
+<div class="backdrop" id="panel-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="modal-head"><h2 id="panel-title"></h2><button class="x" data-close aria-label="Close">✕</button></div>
+    <div id="panel-body"></div>
+    <div class="modal-foot"><span>🔒 Encrypted session</span><button class="gold-btn sm" data-close>Done</button></div>
+  </div>
+</div>
+
+<div class="backdrop" id="login-modal" hidden>
+  <form class="modal login" id="login-form" role="dialog" aria-modal="true" novalidate>
+    <button type="button" class="x" data-close aria-label="Close login">✕</button>
+    <svg class="shield-mark big"><use href="#shield"/></svg>
+    <h2>Log in to Payroll Guard</h2>
+    <p id="login-msg">Review payroll signals and employee access events.</p>
+    <label>Email address<input id="login-email" type="email" placeholder="name@company.com" required></label>
+    <label>Password<input id="login-pass" type="password" placeholder="••••••••" required></label>
+    <button type="submit" class="gold-btn full">Log In</button>
+  </form>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

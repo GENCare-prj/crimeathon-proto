@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payroll Guard | Manager check</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="mgr">
+<main class="mgr-card" id="card"><p class="empty">Loading...</p></main>
+<script>
+const token = new URLSearchParams(location.search).get("token") || "";
+const card = document.getElementById("card");
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const label = (m) => new Date(m + "-01T00:00:00").toLocaleString("en-US", { month: "long", year: "numeric" });
+
+function show(c) {
+  if (c.status === "Pending manager") {
+    card.innerHTML = `<h1>Is ${esc(c.name)} still working with you?</h1>
+      <p>${esc(c.name)} (ID ${esc(c.payroll_id)}) was paid in ${label(c.last_paid)} but is missing from the ${label(c.month)} payroll.</p>
+      <div class="mgr-actions"><button class="gold-btn" id="yes">Yes, still working</button><button class="mini big" id="no">No, has left</button></div>
+      <p class="meta" id="err"></p>`;
+    document.getElementById("yes").onclick = () => answer(true);
+    document.getElementById("no").onclick = () => answer(false);
+  } else {
+    const msg = c.status === "Salary continues"
+      ? "Thank you. Salary will continue as normal."
+      : "Thank you. Salary has been stopped and the SSO and kiosk accounts are disabled.";
+    card.innerHTML = `<h1>Response recorded</h1><p>${esc(c.name)}: <strong>${esc(c.status)}</strong></p><p>${msg}</p>`;
+  }
+}
+async function call(path, opts) {
+  const res = await fetch("/api/manager/" + encodeURIComponent(token) + path, opts);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Something went wrong.");
+  return data;
+}
+async function answer(stillWorking) {
+  try { show(await call("/answer", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ stillWorking }) })); }
+  catch (e) { document.getElementById("err").textContent = e.message; }
+}
+call("", {}).then(show).catch((e) => { card.innerHTML = `<h1>Link not valid</h1><p>${esc(e.message)}</p>`; });
+</script>
+</body>
+</html>
